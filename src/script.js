@@ -10,25 +10,30 @@ const scene = new THREE.Scene()
 // Group
 const group = new THREE.Group()
 scene.add(group)
+group.position.x = 1
+group.scale.y = 2
+group.rotation.y = Math.PI * 0.25
 
-const createNewBox = () => {
-  function randomValue() {
-    return Math.floor(Math.random() * 2.5)
-  }
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-  const box = new THREE.Mesh(geometry, material)
-  box.position.set(randomValue(), randomValue(), randomValue())
-  box.rotation.x = randomValue()
-  box.rotation.y = randomValue()
-  box.rotation.z = randomValue()
+// Geometry to add to group
+const box1 = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+)
+group.add(box1)
 
-  return box
-}
+const box2 = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+)
+box2.position.x = -2
+group.add(box2)
 
-group.add(createNewBox())
-group.add(createNewBox())
-group.add(createNewBox())
+const box3 = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: 0x0000ff })
+)
+box3.position.x = 2
+group.add(box3)
 
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
