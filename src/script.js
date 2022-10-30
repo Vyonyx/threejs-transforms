@@ -7,31 +7,28 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-// Mesh
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+// Group
+const group = new THREE.Group()
+scene.add(group)
 
-// Transforms
-// mesh.position.x = 0.7
-// mesh.position.y = -0.5
-// mesh.position.z = 1
-mesh.position.set(0.7, -0.5, 1)
+const createNewBox = () => {
+  function randomValue() {
+    return Math.floor(Math.random() * 2.5)
+  }
+  const geometry = new THREE.BoxGeometry(1, 1, 1)
+  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  const box = new THREE.Mesh(geometry, material)
+  box.position.set(randomValue(), randomValue(), randomValue())
+  box.rotation.x = randomValue()
+  box.rotation.y = randomValue()
+  box.rotation.z = randomValue()
 
-// mesh.scale.x = 2
-// mesh.scale.y = 0.5
-// mesh.scale.z = 0.5
-mesh.scale.set(2, 0.5, 0.5)
+  return box
+}
 
-mesh.rotation.reorder('YXZ') //Changes the order that the rotations are applied for varying results
-mesh.rotation.x = Math.PI * 0.25
-mesh.rotation.y = Math.PI * 0.25
-
-// Utilities
-// console.log(mesh.position.length())
-// console.log(mesh.position.distanceTo('Another object'))
-// mesh.position.normalize() //Make length of object 1 from origin no matter where it is
+group.add(createNewBox())
+group.add(createNewBox())
+group.add(createNewBox())
 
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
@@ -46,8 +43,7 @@ const sizes = {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
 camera.position.z = 3
 scene.add(camera)
-
-camera.lookAt(mesh.position) //Orient one object to another
+// camera.lookAt(group.position)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
